@@ -1,0 +1,71 @@
+﻿@using SolidSavings.Web.Components
+@using SolidSavings.Web.Controllers
+@using SolidSavings.Web.Models.Enums
+
+@section navigation
+{
+    @await Component.InvokeAsync(typeof(NavigationViewComponent), new { state = ApplicationState.Export })
+}
+
+
+@section body
+    {
+    <div class="col-10">
+        <div class="row section-title">
+            <div class="offset-md-1 col-md-6">
+                <h1>Export</h1>
+            </div>
+        </div>
+        <div class="row section-subtitle">
+            <div class="offset-md-1 col-md-6">
+                <h3>Tutaj możesz exportować dane z systemu do pliku</h3>
+            </div>
+        </div>
+        <div class="row section-body">
+            <div class="col-10 offset-1">
+                <div class="card-group">
+                    <div class="card">
+                        <img class="card-img-top radar-raport-logo"
+                             src="https://upload.wikimedia.org/wikipedia/commons/c/c9/JSON_vector_logo.svg" />
+                        <div class="card-body">
+                            <h5 class="card-title">Eksport JSON</h5>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-action="Export"
+                               asp-controller="Home"
+                               asp-route-exportType="@SolidExportType.Json"
+                               class="btn btn-outline-link">exportuj</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img class="card-img-top radar-raport-logo"
+                             src="https://upload.wikimedia.org/wikipedia/commons/c/c9/JSON_vector_logo.svg" />
+                        <div class="card-body">
+                            <h5 class="card-title">Eksport XLSX</h5>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-action="Export"
+                               asp-controller="Home"
+                               asp-route-exportType="@SolidExportType.Xlsx"
+                               class="btn btn-outline-link">exportuj</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img class="card-img-top radar-raport-logo"
+                             src="https://upload.wikimedia.org/wikipedia/commons/c/c9/JSON_vector_logo.svg" />
+                        <div class="card-body">
+                            <h5 class="card-title">Eksport XML</h5>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-action="Export"
+                               asp-controller="Home"
+                               asp-route-exportType="@SolidExportType.Xml"
+                               class="btn btn-outline-link">exportuj</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

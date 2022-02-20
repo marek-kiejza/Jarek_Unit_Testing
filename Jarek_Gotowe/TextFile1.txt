@@ -1,0 +1,16 @@
+mock-assembly.dll
+Mono.Cecil.dll
+notest-assembly.dll
+nunit.bundle.addins
+nunit.engine.dll
+nunit.engine.api.dll
+nunit.engine.api.xml
+nunit.engine.tests.dll
+nunit.engine.tests.dll.config
+nunit3-console.exe
+nunit3-console.exe.config
+nunit3-console.tests.dll
+nunit-agent.exe
+nunit-agent.exe.config
+nunit-agent-x86.exe
+nunit-agent-x86.exe.config

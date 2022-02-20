@@ -1,0 +1,63 @@
+﻿@using SolidSavings.Web.Components
+@using SolidSavings.Web.Controllers
+@using SolidSavings.Web.Models
+@using SolidSavings.Web.Models.Enums
+@model SolidSavings.Web.Models.ChartModel
+@section navigation
+{
+    @await Component.InvokeAsync(typeof(NavigationViewComponent), new { state = ApplicationState.Report })
+}
+@section body
+    {
+    @Html.Partial("_Report")
+}
+
+@section scripts 
+    {
+    <script src="~/lib/chart.js/dist/Chart.js"></script>
+    <script src="~/lib/chart.js/samples/utils.js"></script>
+    <script>
+        var chartModel = @Json.Serialize(Model);
+        var incomes = chartModel.incomes.map(function(x) { return x.netto });
+        var outcomes = chartModel.outcomes.map(function(x) { return x.netto });
+
+        var labelsI = chartModel.incomes.map(function(x) { return x.month + ' ' + x.year; });
+        var labelsO = chartModel.outcomes.map(function(x) { return x.month + ' ' + x.year; });
+        var labels = labelsI.concat(labelsO);
+        labels = labels.filter(function(item, pos) { return labels.indexOf(item) === pos });
+
+        var color = Chart.helpers.color;
+        var config = {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    backgroundColor: window.chartColors.green,
+                    data: incomes
+                }, {
+                    backgroundColor: window.chartColors.red,
+                    data: outcomes
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display:false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                }
+            }
+        };
+
+        window.onload = function () {
+            window.myRadar = new Chart(document.getElementById("canvas"), config);
+        };
+    </script>
+}

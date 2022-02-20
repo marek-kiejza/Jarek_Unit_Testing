@@ -1,0 +1,51 @@
+﻿@using System.Globalization
+@using SolidSavings.Web.Components
+@using SolidSavings.Web.Controllers
+@using SolidSavings.Web.Models.Enums
+@model SolidSavings.Web.Models.AddOutcomeDto
+@section navigation
+    {
+    @await Component.InvokeAsync(typeof(NavigationViewComponent), new { state = ApplicationState.OutCome })
+}
+@section body
+    {
+<div class="col-10">
+    <div class="row section-title">
+        <div class="offset-md-1 col-md-6">
+            <h1>Wydatki</h1>
+        </div>
+    </div>
+    <div class="row section-subtitle">
+        <div class="offset-md-1 col-md-6">
+            <h3>Poniżej możesz dodać wydatek</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 offset-1">
+            <form asp-action="AddOutcome" asp-controller="Home" method="post">
+                <div class="form-group">
+                    <label for="username">Wydatek netto</label>
+                    <input asp-for="OutcomeNetto"
+                           type="text"
+                           class="form-control"
+                           placeholder="Wydatek netto">
+                </div>
+                <div class="form-group">
+                    <label for="year">Rok</label>
+                    <input asp-for="Year" type="number" class="form-control" placeholder="Rok">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Miesiąc</label>
+                    <select asp-for="Month" type="Select" class="form-control" placeholder="Miesiąc">
+                        @for (int i = 1; i < 13; i++)
+                        {
+                            <option value="@i">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i)</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-outline-success">Dodaj wydatek</button>
+            </form>
+        </div>
+    </div>
+</div>
+}

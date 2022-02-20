@@ -1,0 +1,38 @@
+﻿@using SolidSavings.Web.Controllers
+@using SolidSavings.Web.Models.Enums
+@model SolidSavings.Web.Models.Enums.ApplicationState
+<div class="col-2 full-height full-width">
+    <div class="row row-avatar">
+        <span class="fa fa-dollar fa-4x avatar" style="color: gold"></span>
+    </div>
+    <div class="row">
+        <div class="col-10 offset-1">
+            <a asp-controller="Home"
+               asp-action="Incomes"
+               role="button"
+               class="btn btn-block btn-outline-primary btn-lg btn-menu @(Model==ApplicationState.Income?"active":string.Empty)">Przychody</a>
+            <a asp-controller="Home"
+               asp-action="Outcomes"
+               role="button"
+               class="btn btn-block btn-outline-primary btn-lg btn-menu @(Model==ApplicationState.OutCome?"active":string.Empty)">Wydatki</a>
+            <a asp-controller="Home"
+               asp-action="Reports"
+               role="button"
+               class="btn btn-block btn-outline-primary btn-lg btn-menu @(Model==ApplicationState.Report?"active":string.Empty)">Raporty</a>
+            <a asp-controller="Home"
+               asp-action="Imports"
+               role="button"
+               class="btn btn-block btn-outline-primary btn-lg btn-menu @(Model==ApplicationState.Import?"active":string.Empty)">Import</a>
+            <a asp-controller="Home"
+               asp-action="Exports"
+               role="button"
+               class="btn btn-block btn-outline-primary btn-lg btn-menu @(Model==ApplicationState.Export?"active":string.Empty)">Export</a>
+            <hr />
+            <a asp-controller="Authorization"
+               asp-action="Logout"
+               role="button"
+               class="btn btn-block btn-outline-danger btn-lg btn-menu">Wyloguj</a>
+            <div class="row full-width copyright">Jarosław Stadnicki 2018 (C)</div>
+        </div>
+    </div>
+</div> 

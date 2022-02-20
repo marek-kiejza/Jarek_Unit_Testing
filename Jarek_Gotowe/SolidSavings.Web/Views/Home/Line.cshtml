@@ -1,0 +1,79 @@
+﻿@using System.Globalization
+@using SolidSavings.Web.Components
+@using SolidSavings.Web.Controllers
+@using SolidSavings.Web.Models
+@using SolidSavings.Web.Models.Enums
+@model SolidSavings.Web.Models.ChartModel
+@section navigation
+    {
+    @await Component.InvokeAsync(typeof(NavigationViewComponent), new { state = ApplicationState.Report })
+}
+@section body
+    {
+    @Html.Partial("_Report")
+
+}
+
+@section scripts
+    {
+    <script src="~/lib/chart.js/dist/Chart.js"></script>
+    <script src="~/lib/chart.js/samples/utils.js"></script>
+    <script type="text/javascript">
+        var chartModel = @Json.Serialize(Model);
+        var incomes = chartModel.incomes.map(function(x) { return x.netto });
+        var outcomes = chartModel.outcomes.map(function(x) { return x.netto });
+
+        var labelsI = chartModel.incomes.map(function(x) { return x.month + ' ' + x.year; });
+        var labelsO = chartModel.outcomes.map(function(x) { return x.month + ' ' + x.year; });
+        var labels = labelsI.concat(labelsO);
+        labels = labels.filter(function(item, pos) { return labels.indexOf(item) === pos });
+
+        var config = {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Wydatki",
+                    backgroundColor: window.chartColors.red,
+                    borderColor: window.chartColors.red,
+                    data: outcomes,
+                    fill: false
+                }, {
+                    label: "Przychody",
+                    fill: false,
+                    backgroundColor: window.chartColors.green,
+                    borderColor: window.chartColors.green,
+                    data: incomes
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display:false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                scales: {
+                    xAxes: [{
+                        display: true
+                    }],
+                    yAxes: [{
+                        display: true
+                    }]
+                }
+            }
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myLine = new Chart(ctx, config);
+        };
+    </script>
+}

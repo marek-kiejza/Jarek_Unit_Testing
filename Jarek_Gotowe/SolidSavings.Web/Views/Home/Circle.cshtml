@@ -1,0 +1,69 @@
+﻿@using SolidSavings.Web.Components
+@using SolidSavings.Web.Controllers
+@using SolidSavings.Web.Models
+@using SolidSavings.Web.Models.Enums
+@model SolidSavings.Web.Models.ChartModel
+@section navigation
+    {
+    @await Component.InvokeAsync(typeof(NavigationViewComponent), new { state = ApplicationState.Report })
+}
+@section body
+    {
+    @Html.Partial("_Report")
+}
+
+@section scripts
+    {
+    <script src="~/lib/chart.js/dist/Chart.js"></script>
+    <script src="~/lib/chart.js/samples/utils.js"></script>
+    <script>
+        var chartModel = @Json.Serialize(Model);
+        var incomes = chartModel.incomes.map(function(x) { return x.netto });
+        var outcomes = chartModel.outcomes.map(function(x) { return x.netto });
+
+        var labelsI = chartModel.incomes.map(function(x) { return x.month + ' ' + x.year; });
+        var labelsO = chartModel.outcomes.map(function(x) { return x.month + ' ' + x.year; });
+        var labels = labelsI.concat(labelsO);
+        labels = labels.filter(function(item, pos) { return labels.indexOf(item) === pos });
+
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [
+                    {
+                        data: incomes,
+                        backgroundColor: window.chartColors.green,
+                        label: 'Przychody'
+                    },
+                    {
+                        data: outcomes,
+                        backgroundColor: window.chartColors.red,
+                        label: 'Wydatki'
+                    }
+                ],
+                labels: labels
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display:false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                }
+            }
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myPie = new Chart(ctx, config);
+        };
+
+    </script>
+}

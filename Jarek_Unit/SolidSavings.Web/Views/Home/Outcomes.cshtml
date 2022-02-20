@@ -1,0 +1,96 @@
+﻿@using SolidSavings.Web.Components
+@using SolidSavings.Web.Controllers
+@using SolidSavings.Web.Models.Enums
+@model List<SolidSavings.Web.Models.Outcome>
+
+@section navigation
+{
+    @await Component.InvokeAsync(typeof(NavigationViewComponent), new { state = ApplicationState.OutCome })
+}
+
+@section body
+    {
+    <div class="col-10">
+        <div class="row section-title">
+            <div class="offset-1 col-6">
+                <h1>Wydatki</h1>
+            </div>
+            <div class="col-1 offset-3">
+                <a asp-action="AddOutcome"
+                   asp-controller="Home"
+                   class="btn btn-outline-danger btn-block">
+                    <span class="fa fa-plus-circle"></span> Dodaj
+                </a>
+                <a asp-action="ListOutcomes"
+                   asp-controller="Home"
+                   class="btn btn-outline-danger btn-block">
+                    <span class="fa fa-list"></span> Lista
+                </a>
+            </div>
+        </div>
+        <div class="row section-subtitle">
+            <div class="offset-1 col-6">
+                <h3>Tutaj jest lista twoich wydatków.</h3>
+            </div>
+        </div>
+        <div class="row section-body">
+            <div class="col-10 offset-1">
+                <div class="progress" style="height: 50px">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 15%">15%</div>
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 30%">30%</div>
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 20%">20%</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10 offset-1">
+                <h3>Historia wydatków</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10 offset-1">
+                <canvas id="myChart" style="height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+    {
+    <script src="~/lib/chart.js/dist/Chart.js"></script>
+    <script type="text/javascript">
+        var ctx = document.getElementById("myChart");
+        var chartModel = @Json.Serialize(Model);
+        var labels = chartModel.map(function(x) { return x.month + ' ' + x.year; });
+        var data = chartModel.map(function(x) { return x.netto });
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels:
+                    labels,
+                    datasets: [
+                    {
+                        data: data,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }
+                    ]
+                },
+                legend: {
+                    display:false
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+    </script>
+}

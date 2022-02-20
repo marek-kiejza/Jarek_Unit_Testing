@@ -1,0 +1,60 @@
+﻿@using SolidSavings.Web.Components
+@using SolidSavings.Web.Models.Enums
+@model SolidSavings.Web.Models.RegisterDto
+@section navigation
+    {
+    @await Component.InvokeAsync(typeof(LoginLogoViewComponent))
+}
+@section body
+    {
+    <div class="col-10">
+        <div class="row section-title">
+            <div class="offset-1 col-6">
+                <h1>Rejestracja</h1>
+            </div>
+        </div>
+        <div class="row section-subtitle">
+            <div class="offset-1 col-6">
+                <h3>Aby zacząć działać z aplikacją zaloguj się wcześniej</h3>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-5 offset-1">
+                <form asp-action="Register" asp-controller="Authorization" method="post">
+                    <div class="form-group">
+                        <label for="Username">Nazwa użytkownika</label>
+                        <input asp-for="Username" type="text" id="Username" class="form-control" placeholder="Nazwa użytkownika">
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-check form-check-inline">
+                                <input asp-for="RegistrationType" type="radio"
+                                       id="TypeFree"
+                                       name="RegistrationType"
+                                       class="form-check-input" value="@UserRegistrationType.Free">
+                                <label for="TypeFree" class="form-check-label">Opcja darmowa</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input asp-for="RegistrationType" type="radio"
+                                       id="TypePaid"
+                                       name="RegistrationType"
+                                       class="form-check-input" value="@UserRegistrationType.Paid">
+                                <label for="TypePaid" class="form-check-label">Opcja płatna</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input asp-for="RegistrationType" type="radio"
+                                       id="TypeDemo"
+                                       name="RegistrationType"
+                                       class="form-check-input" value="@UserRegistrationType.Demo">
+                                <label for="TypeDemo" class="form-check-label">Opcja demo</label>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-info" name="Action" value="@LoginActionType.Register">Zarejestruj</button>
+                            </div>
+                        </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

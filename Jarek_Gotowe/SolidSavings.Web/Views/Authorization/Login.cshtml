@@ -1,0 +1,42 @@
+﻿@using SolidSavings.Web.Components
+@using SolidSavings.Web.Models.Enums
+@model SolidSavings.Web.Models.LoginDto
+@section navigation
+    {
+    @await Component.InvokeAsync(typeof(LoginLogoViewComponent))
+}
+@section body
+    {
+    <div class="col-10">
+        <div class="row section-title">
+            <div class="offset-1 col-6">
+                <h1>Logowanie</h1>
+            </div>
+        </div>
+        <div class="row section-subtitle">
+            <div class="offset-1 col-6">
+                <h3>Aby zacząć działać z aplikacją zaloguj się wcześniej</h3>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-5 offset-1">
+                <form asp-action="Login" asp-controller="Authorization" method="post">
+                    <div class="form-group">
+                        <label for="Username">Nazwa użytkownika</label>
+                        <input asp-for="Username" type="text" id="Username" class="form-control" placeholder="Nazwa użytkownika">
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-primary">Zaloguj</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a asp-action="Register" asp-controller="Authorization">Register</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

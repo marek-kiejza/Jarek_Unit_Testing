@@ -1,0 +1,56 @@
+﻿@using SolidSavings.Web.Components
+@using SolidSavings.Web.Controllers
+@using SolidSavings.Web.Models
+@using SolidSavings.Web.Models.Enums
+@model List<SolidSavings.Web.Models.Income>
+@section navigation
+    {
+    @await Component.InvokeAsync(typeof(NavigationViewComponent), new { state = ApplicationState.Income })
+}
+@section body
+    {
+    <div class="col-10">
+        <div class="row section-title">
+            <div class="offset-md-1 col-md-6">
+                <h1>Przychody</h1>
+            </div>
+        </div>
+        <div class="row section-subtitle">
+            <div class="offset-md-1 col-md-6">
+                <h3>Lista twoich przychodów</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8 offset-1">
+                <table class="table table-hover table-striped" style="height: 100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Netto</th>
+                            <th scope="col">Miesiąc</th>
+                            <th scope="col">Rok</th>
+                            <th scope="col">Opcje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td>@Model[i].Netto</td>
+                                <td>@Model[i].Month</td>
+                                <td>@Model[i].Year</td>
+                                <td>
+                                    <a asp-action="RemoveIncome"
+                                       asp-controller="Home"
+                                       asp-route-id="@Model[i].Id"
+                                       class="btn-sm btn-outline-danger">Usuń</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
